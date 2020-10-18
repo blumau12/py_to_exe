@@ -1,0 +1,37 @@
+
+1. В питон, запускающий проект, установить cx_Freeze (pip install cx_Freeze) и idna (pip install idna).
+2. Скопировать проект в py_project.
+3. Отредактировать script.py
+  *    в executables вписать путь к исполняемому файлу .py;
+  *    включить все используемые в проекте сторонние и стандартные пакеты в packages
+  *    если программа с графическим интерфейсом, прописать правильные пути к tcl/tk
+  *    заполнить параметры setup (ex: name = "<first_ever>", version = "0.11", description = '')
+4. Запустить "script.py build" с питона, запускающего проект
+
+
+setup.py:
+
+from cx_Freeze import setup, Executable
+import os
+
+base = 'Win32GUI'    
+
+executables = [Executable("myfirstprog.py", base=base)]
+
+packages = ["idna"]
+options = {
+    'build_exe': {    
+        'packages':packages,
+    },    
+}
+
+os.environ['TCL_LIBRARY'] = r'C:\Users\david\AppData\Local\Programs\Python\Python37\tcl\tcl8.6'
+os.environ['TK_LIBRARY'] = r'C:\Users\david\AppData\Local\Programs\Python\Python37\tcl\tk8.6'
+
+setup(
+    name = "<any name>",
+    options = options,
+    version = "<any number>",
+    description = '<any description>',
+    executables = executables
+)
